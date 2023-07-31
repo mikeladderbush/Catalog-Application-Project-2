@@ -1,45 +1,55 @@
 package com.ladderbush.catalogapplication.Entities;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "Miniature")
+@Table(name = "Miniatures")
 @NoArgsConstructor
 public class Miniature {
 
+    @ManyToOne
+    @JoinColumn(name = "username", nullable = false)
+    private UserAccount userAccount;
+
     @Id
     @GeneratedValue
-    private long Id;
+    private long miniatureId;
 
-    private String name;
+    private String miniatureName;
     private int scale;
     private String brand;
     private double price;
 
-    public Miniature(long id, String name, int scale, String brand, double price) {
-        Id = id;
-        this.name = name;
+    public Miniature(long miniatureId, String miniatureName, int scale, String brand, double price) {
+        miniatureId = miniatureId;
+        this.miniatureName = miniatureName;
         this.scale = scale;
         this.brand = brand;
         this.price = price;
     }
 
-    public long getId() {
-        return Id;
+    public long getMiniatureId() {
+        return miniatureId;
     }
 
-    public void setId(long id) {
-        Id = id;
+    public void setMiniatureId(long id) {
+        miniatureId = id;
     }
 
-    public String getName() {
-        return name;
+    public String getMiniatureName() {
+        return miniatureName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMiniatureName(String name) {
+        this.miniatureName = name;
     }
 
     public int getScale() {
@@ -66,46 +76,16 @@ public class Miniature {
         this.price = price;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (Id ^ (Id >>> 32));
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + scale;
-        result = prime * result + ((brand == null) ? 0 : brand.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(price);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+    public List<Miniature> getImages() {
+        return null;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Miniature other = (Miniature) obj;
-        if (Id != other.Id)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (scale != other.scale)
-            return false;
-        if (brand == null) {
-            if (other.brand != null)
-                return false;
-        } else if (!brand.equals(other.brand))
-            return false;
-        if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-            return false;
-        return true;
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
 }
