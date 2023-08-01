@@ -1,50 +1,39 @@
 package com.ladderbush.catalogapplication.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
-@Entity(name = "Role")
-@Table(name = "Roles")
-@NoArgsConstructor
+@Entity
+@Table(name = "roles")
 public class UserRole {
-
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private UserAccount userAccount;
-
     @Id
-    @GeneratedValue
-    private long roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private EnumRole name;
 
-    public String getRole() {
-        return role;
+    public UserRole() {
+
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public UserRole(EnumRole name) {
+        this.name = name;
     }
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public long getRoleId() {
-        return roleId;
+    public EnumRole getName() {
+        return name;
     }
 
-    public void setRoleId(long roleId) {
-        this.roleId = roleId;
+    public void setName(EnumRole name) {
+        this.name = name;
     }
-
 }

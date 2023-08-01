@@ -1,34 +1,57 @@
 package com.ladderbush.catalogapplication.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.NoArgsConstructor;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "UserAccount")
-@NoArgsConstructor
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+})
+
 public class UserAccount {
 
     @Id
-    @GeneratedValue
-    private long accountId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @NotBlank
+    @Size(max = 20)
     private String username;
 
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
-    public UserAccount(long accountId, String username, String email) {
-        this.accountId = accountId;
+    @NotBlank
+    @Size(max = 120)
+    private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<UserRole> roles = new HashSet<>();
+
+    public UserAccount() {
+    }
+
+    public UserAccount(String username, String email, String password) {
         this.username = username;
         this.email = email;
+        this.password = password;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -45,5 +68,21 @@ public class UserAccount {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 }
