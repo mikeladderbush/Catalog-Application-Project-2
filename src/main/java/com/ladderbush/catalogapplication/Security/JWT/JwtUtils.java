@@ -18,10 +18,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${ladderbush.catalogapplication.jwtSecret}")
+    @Value("${bezkoder.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${ladderbush.catalogapplication.jwtExpirationMs}")
+    @Value("${bezkoder.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
