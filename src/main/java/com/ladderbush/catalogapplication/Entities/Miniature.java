@@ -29,7 +29,6 @@ public class Miniature {
     private double price;
 
     public Miniature(long miniatureId, String miniatureName, int scale, String brand, double price) {
-        miniatureId = miniatureId;
         this.miniatureName = miniatureName;
         this.scale = scale;
         this.brand = brand;
