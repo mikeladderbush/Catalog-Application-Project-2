@@ -16,11 +16,11 @@ function AddDataComponent() {
     async function urlGeneration() {
 
         try {
-            const response = await axios.get('http://localhost:8080/api/user/miniatures');
+            const response = await axios.get('http://localhost:8080//api/v1/demo-controller');
             const miniatures = response.data;
             miniatures.sort((a, b) => b.id - a.id);
             const newMiniatureId = miniatures[0].miniature_id + 1;
-            const url = `http://localhost:3000/api/user/miniatures/${newMiniatureId}`;
+            const url = `http://localhost:3000/api/v1/miniature-controller/miniature${newMiniatureId}`;
             console.log(url);
             return url;
         } catch (error) {
@@ -41,7 +41,7 @@ function AddDataComponent() {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/miniatures', data);
+            const response = await axios.post('http://localhost:8080//api/v1/demo-controller', data);
             console.log(response.data);
             const url = await urlGeneration();
             setFormData((prevState) => ({ ...prevState, page: url }));

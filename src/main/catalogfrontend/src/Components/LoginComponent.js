@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function LoginComponent() {
-  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -17,20 +19,16 @@ function LoginComponent() {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/login', {
-        username,
+      const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', {
+        email,
         password,
       });
 
-      // Assuming the response contains a token
-      const token = response.data.token;
+      const token = response.data.access_token;
+      console.log(token);
 
-      // Store the token in local storage or any other secure storage mechanism
-      localStorage.setItem('token', token);
-
-      // Redirect the user to the desired page or update the UI accordingly
-      // For example, you can navigate to a dashboard page
-      // history.push('/dashboard');
+      navigate('/api/v1/demo-controller')
+      
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -39,8 +37,8 @@ function LoginComponent() {
   return (
     <form onSubmit={handleLogin}>
       <div>
-        <label>Username:</label>
-        <input type="text" value={username} onChange={handleUsernameChange} />
+        <label>Email:</label>
+        <input type="text" value={email} onChange={handleEmailChange} />
       </div>
       <div>
         <label>Password:</label>

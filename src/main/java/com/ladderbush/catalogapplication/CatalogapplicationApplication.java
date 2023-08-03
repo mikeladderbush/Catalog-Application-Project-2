@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import com.ladderbush.catalogapplication.Authentication.AuthenticationService;
 import com.ladderbush.catalogapplication.Authentication.RegisterRequest;
 
-import com.ladderbush.catalogapplication.User.Role;
 import static com.ladderbush.catalogapplication.User.Role.ADMIN;
 import static com.ladderbush.catalogapplication.User.Role.MANAGER;
 
@@ -26,10 +25,10 @@ public class CatalogapplicationApplication {
 	) {
 		return args -> {
 			var admin = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.email("admin@mail.com")
-					.password("password")
+					.firstname("Mike")
+					.lastname("Ladderbush")
+					.email("mikeladderbush@gmail.com")
+					.password("Applesauce1!")
 					.role(ADMIN)
 					.build();
 			System.out.println("Admin token: " + service.register(admin).getAccessToken());
@@ -46,3 +45,11 @@ public class CatalogapplicationApplication {
 		};
 	}
 }
+
+
+/*
+ * Next steps:
+ * Build apis for creating miniatures with images that can be posted to
+ * create a login form in react for spring security
+ * add connection to react front end to apis and components
+ */

@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [jsonData, setJsonData] = useState([]);
 
+  const {token} = useParams();
+  
+  const config = {
+    headers: {Authorization: `${token}`}
+  };
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/miniatures')
+    axios.get('http://localhost:8080//api/v1/demo-controller',
+    config)
       .then(response => {
         setJsonData(response.data);
       })
@@ -24,7 +31,7 @@ function SearchComponent() {
   const handleFormSubmit = event => {
     event.preventDefault();
     const results = jsonData.filter(item => {
-      if (item.page.includes("http://localhost:3000/api/miniatures/1")) {
+      if (item.page.includes("http://localhost:8080//api/v1/demo-controller")) {
         return false;
       }
       return item.page && item.page.includes(searchQuery);

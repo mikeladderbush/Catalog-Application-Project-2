@@ -5,7 +5,7 @@ import axios from 'axios';
 function PrintToFile() {
     const handleDownload = async () => {
         try{ 
-            const response = await axios.get("http://localhost:8080/api/miniatures")
+            const response = await axios.get("http://localhost:8080//api/v1/demo-controller")
             const fileContent = JSON.stringify(response.data)
             const blob = new Blob([fileContent], {type: 'text/plain;charset=utf-8'});
             saveAs(blob, 'MiniaturePortfolio.txt');

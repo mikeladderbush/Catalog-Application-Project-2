@@ -8,12 +8,18 @@ import DisplayImageComponent from './DisplayImageComponent';
 function MiniatureDetail() {
 
   const { id } = useParams();
+  const {token} = useParams();
+  
+  const config = {
+    headers: {Authorization: `${token}`}
+  };
   const [miniature, setMiniature] = useState(null);
   const [updatedData, setUpdatedData] = useState({});
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/miniatures/${id}`)
+      .get(`http://localhost:8080/api/v1/demo-controller`,
+      config)
       .then((response) => {
         setMiniature(response.data);
         console.log(response.data);
@@ -31,7 +37,7 @@ function MiniatureDetail() {
   const handleUpdate = () => {
     const updatedMiniature = { ...miniature, ...updatedData };
 
-    axios.put(`http://localhost:8080/api/miniatures/${id}`, updatedMiniature)
+    axios.put(`http://localhost:8080//api/v1/demo-controller`, updatedMiniature)
       .then((response) => {
         console.log("Miniature updated:", response.data);
         setMiniature(response.data);
