@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DemoTestComponent from './Components/DemoTestComponent';
 
 function App() {
-
   return (
     <Router>
       <Routes>
-        <Route path="" element={<MainRoute />} />
-        <Route path="/api/v1/demo-controller" element={<DemoTestComponent />} />
+        <Route path="/" element={<MainRoute />} />
+        <Route path="/api/v1/demo-controller/:token" element={<DemoTestComponent />} />
       </Routes>
     </Router>
   );
@@ -18,7 +17,8 @@ function App() {
 function MainRoute() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState({ token: '' })
+  const [token, setToken] = useState('');
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -35,9 +35,11 @@ function MainRoute() {
       const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', {
         email,
         password,
-      }).then(
-        response => setToken(response.data.access_token)
-      );
+      });
+
+      const newToken = response.data.access_token;
+      setToken(newToken);
+      navigate(`/api/v1/demo-controller/${newToken}`);
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -54,13 +56,10 @@ function MainRoute() {
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} />
         </div>
-        <Link to={`/api/v1/demo-controller`}>
-          <button type="submit">Login</button>
-        </Link>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
 }
 
 export default App;
-
