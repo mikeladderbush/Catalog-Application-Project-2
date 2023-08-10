@@ -1,29 +1,32 @@
 package com.ladderbush.catalogapplication.User;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "Images")
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Image {
 
     @Id
     @GeneratedValue
     private long imageId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "miniatureId")
-    @JsonBackReference
-    private Miniature miniature;
+    @ManyToOne
+    @JsonIgnoreProperties("images")
+    @JoinColumn(name = "miniature_id")
+    public Miniature miniature;
 
     private String imageURL;
 

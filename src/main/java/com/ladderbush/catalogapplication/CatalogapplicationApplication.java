@@ -21,7 +21,6 @@ public class CatalogapplicationApplication {
 
 	@Bean
 	public CommandLineRunner commandLineRunner(UserRepository userRepository, AuthenticationService service) {
-		/* alter to not place duplicates */
 		return args -> {
 			String adminEmail = "mikeladderbush@gmail.com";
 			if (userRepository.findByEmail(adminEmail).isEmpty()) {

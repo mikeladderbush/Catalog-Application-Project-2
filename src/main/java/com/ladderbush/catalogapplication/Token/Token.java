@@ -1,5 +1,6 @@
 package com.ladderbush.catalogapplication.Token;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ladderbush.catalogapplication.User.User;
 
 import jakarta.persistence.Column;
@@ -38,6 +39,7 @@ public class Token {
   public boolean expired;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnoreProperties("tokens")
   @JoinColumn(name = "user_id")
   public User user;
 }

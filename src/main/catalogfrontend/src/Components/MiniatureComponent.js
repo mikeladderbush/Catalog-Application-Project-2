@@ -30,17 +30,19 @@ const MiniatureComponent = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleFormSubmit = event => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    const results = jsonData.filter(item => {
-      if (item.page.includes("http://localhost:8080//api/v1/miniature-controller/miniature/1")) {
-        return false;
-      }
-      return item.page && item.page.includes(searchQuery);
+    const results = jsonData.filter((item) => {
+      return (
+        item.miniatureName.includes(searchQuery) ||
+        item.miniatureBrand.includes(searchQuery) ||
+        item.scale.toString().includes(searchQuery)
+      );
     });
 
     setSearchResults(results);
   };
+
 
   return (
     <div>
@@ -58,13 +60,16 @@ const MiniatureComponent = () => {
           <h2>Search Results:</h2>
           <ul>
             {searchResults.map((result) => (
-              <li key={result.id}>
-                <Link to={`miniatures/${result.miniatureId}`}>{result.page}</Link>
+              <li key={result.miniatureId}>
+                <Link to={`miniatures/${result.miniatureId}`}>
+                  {result.miniatureName} - {result.miniatureBrand} (Scale: {result.scale})
+                </Link>
               </li>
             ))}
           </ul>
         </div>
       )}
+
     </div>
   );
 };
