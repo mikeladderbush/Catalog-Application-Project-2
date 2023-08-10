@@ -31,7 +31,7 @@ public class Miniature {
     private String miniatureBrand;
     private int scale;
 
-    @OneToMany(mappedBy = "miniature", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "miniature", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Image> images = new ArrayList<>();
 

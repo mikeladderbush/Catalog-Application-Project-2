@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DemoTestComponent from './Components/DemoTestComponent';
+import MiniatureComponent from './Components/MiniatureComponent';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MainRoute />} />
-        <Route path="/api/v1/demo-controller/:token" element={<DemoTestComponent />} />
+        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureComponent />} />
       </Routes>
     </Router>
   );
@@ -39,7 +39,7 @@ function MainRoute() {
 
       const newToken = response.data.access_token;
       setToken(newToken);
-      navigate(`/api/v1/demo-controller/${newToken}`);
+      navigate(`/api/v1/miniature-controller/${newToken}`);
     } catch (error) {
       console.error('Login failed:', error);
     }
