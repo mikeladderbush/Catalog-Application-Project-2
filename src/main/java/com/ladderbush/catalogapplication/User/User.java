@@ -43,8 +43,10 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Token> tokens;
 
+  
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Miniature> miniatures;
+  
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

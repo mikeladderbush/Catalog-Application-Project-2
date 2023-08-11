@@ -1,3 +1,4 @@
+
 package com.ladderbush.catalogapplication.User;
 
 import java.util.List;
@@ -37,10 +38,10 @@ public class Miniature {
     @JoinColumn(name = "user_id")
     public User user;
 
-    /*
+    
     @OneToMany(mappedBy = "miniature", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Image> images;
-    */
+    
     public String getMiniatureName() {
         return miniatureName;
     }

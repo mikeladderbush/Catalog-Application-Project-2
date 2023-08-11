@@ -1,3 +1,4 @@
+
 package com.ladderbush.catalogapplication.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,3 +10,4 @@ public interface MiniatureRepository extends JpaRepository<Miniature, Long> {
     Optional<Miniature> findByMiniatureId(Long id);
 
 }
+

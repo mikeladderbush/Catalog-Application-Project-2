@@ -1,4 +1,4 @@
-/*
+
 package com.ladderbush.catalogapplication.User;
 
 import jakarta.persistence.CascadeType;
@@ -47,5 +47,3 @@ public class Image {
     }
 
 }
-
- */

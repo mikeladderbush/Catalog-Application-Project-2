@@ -1,5 +1,3 @@
-/*
-
 package com.ladderbush.catalogapplication.User;
 
 import java.util.Optional;
@@ -10,5 +8,3 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Optional<Long> findByImageId(Long id);
 }
-
- */

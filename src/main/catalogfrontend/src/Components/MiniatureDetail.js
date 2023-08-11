@@ -5,19 +5,19 @@ import { useParams } from "react-router-dom";
 import AddImageComponent from './AddImageComponent';
 import DisplayImageComponent from './DisplayImageComponent';
 
-function MiniatureDetail() {
+const MiniatureDetail = () => {
 
   const { id } = useParams();
-  const {token} = useParams();
-  
+  const { token } = useParams();
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const [miniature, setMiniature] = useState(null);
+  const [miniature, setMiniature] = useState();
   const [updatedData, setUpdatedData] = useState({});
 
-  useEffect(() => {
+  const loadData = async () => {
     axios
       .get(`http://localhost:8080/api/v1/miniature-controller/${token}`, {
         headers: config.headers,
@@ -29,7 +29,11 @@ function MiniatureDetail() {
       .catch((error) => {
         console.error('Error fetching miniature:', error);
       });
-  }, [config.headers, id]);
+  }
+
+  useEffect(() => {
+    if (!miniature) loadData()
+  }, [miniature, loadData])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
