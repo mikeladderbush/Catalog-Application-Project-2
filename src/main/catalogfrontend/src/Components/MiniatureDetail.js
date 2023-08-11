@@ -11,15 +11,17 @@ function MiniatureDetail() {
   const {token} = useParams();
   
   const config = {
-    headers: {Authorization: `${token}`}
+    headers: { Authorization: `Bearer ${token}` },
   };
+
   const [miniature, setMiniature] = useState(null);
   const [updatedData, setUpdatedData] = useState({});
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/v1/miniature-controller`,
-      config)
+      .get(`http://localhost:8080/api/v1/miniature-controller/${token}`, {
+        headers: config.headers,
+      })
       .then((response) => {
         setMiniature(response.data);
         console.log(response.data);
@@ -27,7 +29,7 @@ function MiniatureDetail() {
       .catch((error) => {
         console.error('Error fetching miniature:', error);
       });
-  }, [id]);
+  }, [config.headers, id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,7 +39,7 @@ function MiniatureDetail() {
   const handleUpdate = () => {
     const updatedMiniature = { ...miniature, ...updatedData };
 
-    axios.put(`http://localhost:8080//api/v1/miniature-controller`, updatedMiniature)
+    axios.put(`http://localhost:8080//api/v1/miniature-controller/${token}`, updatedMiniature)
       .then((response) => {
         console.log("Miniature updated:", response.data);
         setMiniature(response.data);
@@ -82,14 +84,10 @@ function MiniatureDetail() {
           onChange={handleInputChange}
         />
       </p>
-      <div>
-        <AddImageComponent miniature={miniature} />
-      </div>
       <button onClick={handleUpdate}>Update</button>
       <Link to={`/miniatures`}>
         <button>Go Back to Menu</button>
       </Link>
-      <DisplayImageComponent miniature={miniature} />
     </div>
   );
 }

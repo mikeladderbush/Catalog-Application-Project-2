@@ -1,8 +1,10 @@
 package com.ladderbush.catalogapplication.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -17,7 +19,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ladderbush.catalogapplication.Token.Token;
 
 @Data
@@ -39,12 +40,10 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @OneToMany(mappedBy = "user")
-  @JsonIgnoreProperties("user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Token> tokens;
 
-  @OneToMany(mappedBy = "user")
-  @JsonIgnoreProperties("user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Miniature> miniatures;
 
   @Override

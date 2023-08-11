@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MiniatureComponent from './Components/MiniatureComponent';
+import MiniatureDetail from './Components/MiniatureDetail';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MainRoute />} />
-        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureComponent />} />
+        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureDetail />} />
       </Routes>
     </Router>
   );

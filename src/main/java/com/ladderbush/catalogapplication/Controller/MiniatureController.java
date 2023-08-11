@@ -25,7 +25,7 @@ public class MiniatureController {
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 
-    @GetMapping("/miniature/{miniatureId}")
+    @GetMapping("/{token}/{miniatureId}")
     public ResponseEntity<Miniature> getMiniature(@PathVariable Long miniatureId) {
         Optional<Miniature> miniatureOptional = miniatureRepository.findByMiniatureId(miniatureId);
         if (miniatureOptional.isPresent()) {
@@ -35,7 +35,7 @@ public class MiniatureController {
         }
     }
 
-    @GetMapping("/miniatures")
+    @GetMapping("/{token}")
     public ResponseEntity<List<Miniature>> getAllMiniatures() {
         List<Miniature> miniatures = miniatureRepository.findAll();
         return ResponseEntity.ok(miniatures);

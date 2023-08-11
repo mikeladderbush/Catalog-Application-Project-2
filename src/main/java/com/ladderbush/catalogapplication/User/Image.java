@@ -1,8 +1,9 @@
+/*
 package com.ladderbush.catalogapplication.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -23,8 +24,7 @@ public class Image {
     @GeneratedValue
     private long imageId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("images")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "miniature_id")
     public Miniature miniature;
 
@@ -47,3 +47,5 @@ public class Image {
     }
 
 }
+
+ */

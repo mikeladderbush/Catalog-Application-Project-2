@@ -14,7 +14,7 @@ function SearchComponent() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080//api/v1/demo-controller',
+    axios.get('http://localhost:8080//api/v1/miniature-controller/miniatures',
     config)
       .then(response => {
         setJsonData(response.data);
@@ -31,7 +31,7 @@ function SearchComponent() {
   const handleFormSubmit = event => {
     event.preventDefault();
     const results = jsonData.filter(item => {
-      if (item.page.includes("http://localhost:8080//api/v1/demo-controller")) {
+      if (item.page.includes("http://localhost:8080//api/v1/miniature-controller/miniatures")) {
         return false;
       }
       return item.page && item.page.includes(searchQuery);

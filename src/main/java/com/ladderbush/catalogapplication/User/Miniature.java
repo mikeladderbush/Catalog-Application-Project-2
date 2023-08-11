@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,15 +33,14 @@ public class Miniature {
     private String miniatureBrand;
     private int scale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("miniatures")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     public User user;
 
-    @JsonIgnoreProperties("miniature")
-    @OneToMany(mappedBy = "miniature")
+    /*
+    @OneToMany(mappedBy = "miniature", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Image> images;
-
+    */
     public String getMiniatureName() {
         return miniatureName;
     }
