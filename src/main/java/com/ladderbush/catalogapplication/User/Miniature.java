@@ -32,7 +32,7 @@ public class Miniature {
     private long miniatureId;
 
     private String miniatureBrand;
-    private int scale;
+    private int miniatureScale;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
@@ -66,12 +66,12 @@ public class Miniature {
         this.miniatureBrand = miniatureBrand;
     }
 
-    public int getScale() {
-        return scale;
+    public int getMiniatureScale() {
+        return miniatureScale;
     }
 
-    public void setScale(int scale) {
-        this.scale = scale;
+    public void setMiniatureScale(int miniatureScale) {
+        this.miniatureScale = miniatureScale;
     }
 
 }

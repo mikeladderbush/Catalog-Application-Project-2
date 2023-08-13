@@ -41,4 +41,30 @@ public class MiniatureController {
         List<Miniature> miniatures = miniatureRepository.findAll();
         return ResponseEntity.ok(miniatures);
     }
+
+    @PutMapping("/{token}/{miniatureId}/save")
+    public ResponseEntity<Miniature> updateMiniature(@PathVariable Long miniatureId, @RequestBody Miniature updatedMiniature) {
+        Optional<Miniature> existingMiniatureOptional = miniatureRepository.findByMiniatureId(miniatureId);
+        
+        if (existingMiniatureOptional.isPresent()) {
+            Miniature existingMiniature = existingMiniatureOptional.get();
+            
+            existingMiniature.setMiniatureName(updatedMiniature.getMiniatureName());
+            existingMiniature.setMiniatureScale(updatedMiniature.getMiniatureScale());
+            existingMiniature.setMiniatureBrand(updatedMiniature.getMiniatureBrand());
+            
+            miniatureRepository.save(existingMiniature);
+            return ResponseEntity.ok(existingMiniature);
+        } else {
+            miniatureRepository.save(updatedMiniature);
+            return ResponseEntity.ok(updatedMiniature);
+        }
+    }
+    
+
+    @PostMapping("/{token}/save")
+    public ResponseEntity<Miniature> saveMiniature(@RequestBody Miniature miniature) {
+        miniatureRepository.save(miniature);
+        return ResponseEntity.ok(miniature);
+    }
 }
