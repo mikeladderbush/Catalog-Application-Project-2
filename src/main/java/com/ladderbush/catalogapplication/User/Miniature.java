@@ -3,8 +3,6 @@ package com.ladderbush.catalogapplication.User;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +30,7 @@ public class Miniature {
     private long miniatureId;
 
     private String miniatureBrand;
-    private int miniatureScale;
+    private String miniatureScale;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
@@ -66,11 +64,11 @@ public class Miniature {
         this.miniatureBrand = miniatureBrand;
     }
 
-    public int getMiniatureScale() {
+    public String getMiniatureScale() {
         return miniatureScale;
     }
 
-    public void setMiniatureScale(int miniatureScale) {
+    public void setMiniatureScale(String miniatureScale) {
         this.miniatureScale = miniatureScale;
     }
 

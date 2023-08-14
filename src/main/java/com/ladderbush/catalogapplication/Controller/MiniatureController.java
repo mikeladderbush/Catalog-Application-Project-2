@@ -1,7 +1,7 @@
-
 package com.ladderbush.catalogapplication.Controller;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/miniature-controller")
-@Hidden
 public class MiniatureController {
 
     @Autowired
@@ -43,28 +42,47 @@ public class MiniatureController {
     }
 
     @PutMapping("/{token}/{miniatureId}/save")
-    public ResponseEntity<Miniature> updateMiniature(@PathVariable Long miniatureId, @RequestBody Miniature updatedMiniature) {
+    public ResponseEntity<Miniature> updateMiniature(
+            @PathVariable String token,
+            @PathVariable Long miniatureId,
+            @RequestBody Miniature updatedMiniature) {
+
         Optional<Miniature> existingMiniatureOptional = miniatureRepository.findByMiniatureId(miniatureId);
-        
+
         if (existingMiniatureOptional.isPresent()) {
             Miniature existingMiniature = existingMiniatureOptional.get();
-            
+
             existingMiniature.setMiniatureName(updatedMiniature.getMiniatureName());
             existingMiniature.setMiniatureScale(updatedMiniature.getMiniatureScale());
             existingMiniature.setMiniatureBrand(updatedMiniature.getMiniatureBrand());
-            
+
             miniatureRepository.save(existingMiniature);
-            return ResponseEntity.ok(existingMiniature);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Authorization", "Bearer " + token);
+
+            return new ResponseEntity<>(existingMiniature, responseHeaders, HttpStatus.OK);
         } else {
+            updatedMiniature.setMiniatureId(miniatureId);
             miniatureRepository.save(updatedMiniature);
-            return ResponseEntity.ok(updatedMiniature);
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Authorization", "Bearer " + token);
+
+            return new ResponseEntity<>(updatedMiniature, responseHeaders, HttpStatus.OK);
         }
     }
-    
 
     @PostMapping("/{token}/save")
-    public ResponseEntity<Miniature> saveMiniature(@RequestBody Miniature miniature) {
+    public ResponseEntity<Miniature> saveMiniature(
+            @PathVariable String token,
+            @RequestBody Miniature miniature) {
+
         miniatureRepository.save(miniature);
-        return ResponseEntity.ok(miniature);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Authorization", "Bearer " + token);
+
+        return new ResponseEntity<>(miniature, responseHeaders, HttpStatus.OK);
     }
 }

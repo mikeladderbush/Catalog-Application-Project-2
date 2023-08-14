@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.ladderbush.catalogapplication.Authentication.AuthenticationService;
 import com.ladderbush.catalogapplication.Authentication.RegisterRequest;
+import com.ladderbush.catalogapplication.User.Miniature;
+import com.ladderbush.catalogapplication.User.MiniatureRepository;
 import com.ladderbush.catalogapplication.User.UserRepository;
 
 import static com.ladderbush.catalogapplication.User.Role.ADMIN;
@@ -20,7 +22,7 @@ public class CatalogapplicationApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(UserRepository userRepository, AuthenticationService service) {
+	public CommandLineRunner commandLineRunner(UserRepository userRepository, AuthenticationService service, MiniatureRepository miniatureRepository) {
 		return args -> {
 			String adminEmail = "mikeladderbush@gmail.com";
 			if (userRepository.findByEmail(adminEmail).isEmpty()) {
@@ -48,6 +50,18 @@ public class CatalogapplicationApplication {
 				System.out.println("Manager token: " + service.register(manager).getAccessToken());
 			} else {
 				System.out.println("Manager already exists");
+			}
+
+			if (miniatureRepository.findByMiniatureId((long) 0).isEmpty()) {
+				Miniature defaultMiniature = new Miniature();
+				defaultMiniature.setMiniatureName("Default Miniature");
+				defaultMiniature.setMiniatureScale("1");
+				defaultMiniature.setMiniatureBrand("Sample Brand");
+
+				miniatureRepository.save(defaultMiniature);
+				System.out.println("Default Miniature added");
+			} else {
+				System.out.println("Default Miniature already exists");
 			}
 		};
 	}
