@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [jsonData, setJsonData] = useState([]);
 
-  const {token} = useParams();
-  
+  const { token } = useParams();
+
   const config = {
-    headers: {Authorization: `${token}`}
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8080//api/v1/miniature-controller/miniatures',
-    config)
-      .then(response => {
+    axios
+      .get(`http://localhost:8080/api/v1/miniature-controller/${token}`, {
+        headers: config.headers,
+      })
+      .then((response) => {
+        console.log(response.data);
         setJsonData(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -28,13 +33,26 @@ function SearchComponent() {
     setSearchQuery(event.target.value);
   };
 
-  const handleFormSubmit = event => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    const results = jsonData.filter(item => {
-      if (item.page.includes("http://localhost:8080//api/v1/miniature-controller/miniatures")) {
-        return false;
-      }
-      return item.page && item.page.includes(searchQuery);
+
+    if (!jsonData || jsonData.length === 0) {
+      return;
+    }
+
+    if (!searchQuery) {
+      setSearchResults(jsonData);
+      return;
+    }
+
+    const results = jsonData.filter((item) => {
+      const { miniatureName, miniatureScale, miniatureBrand } = item;
+
+      return (
+        (miniatureName && miniatureName.includes(searchQuery)) ||
+        (miniatureScale && miniatureScale.includes(searchQuery)) ||
+        (miniatureBrand && miniatureBrand.includes(searchQuery))
+      );
     });
 
     setSearchResults(results);
@@ -51,18 +69,26 @@ function SearchComponent() {
         />
         <button type="submit">Search</button>
       </form>
-      {searchResults.length > 0 && (
-        <div>
-          <h2>Search Results:</h2>
-          <ul>
-            {searchResults.map((result) => (
-              <li key={result.id}>
-                <Link to={`/miniatures/${result.miniature_id}`}>{result.page}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div>
+        <h2>Search Results:</h2>
+        <ul>
+          {searchResults.map((result, index) => (
+            <li key={index}>
+              {console.log(result)}
+              {result.miniatureName && (
+                <p>Name: {result.miniatureName}</p>
+              )}
+              {result.miniatureScale && (
+                <p>Scale: {result.miniatureScale}</p>
+              )}
+              {result.miniatureBrand && (
+                <p>Brand: {result.miniatureBrand}</p>
+              )}
+            </li>
+          ))}
+
+        </ul>
+      </div>
     </div>
   );
 }

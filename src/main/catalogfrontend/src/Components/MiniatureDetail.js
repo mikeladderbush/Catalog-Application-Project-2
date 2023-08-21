@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import SearchComponent from './SearchComponent';
 
 const MiniatureDetail = () => {
   const { token } = useParams();
@@ -9,7 +10,7 @@ const MiniatureDetail = () => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json', // Add this line for proper content type
+      'Content-Type': 'application/json',
     },
   };
 
@@ -57,7 +58,7 @@ const MiniatureDetail = () => {
           `http://localhost:8080/api/v1/miniature-controller/${token}/${miniature.miniatureId}/save`,
           dataToUpdate,
           {
-            headers: config.headers, // Pass the headers here as well
+            headers: config.headers,
           }
         )
         .then((response) => {
@@ -73,7 +74,7 @@ const MiniatureDetail = () => {
           `http://localhost:8080/api/v1/miniature-controller/${token}/save`,
           dataToUpdate,
           {
-            headers: config.headers, // Pass the headers here as well
+            headers: config.headers,
           }
         )
         .then((response) => {
@@ -120,6 +121,8 @@ const MiniatureDetail = () => {
       <Link to={`http://localhost:3000`}>
         <button>Go Back to Menu</button>
       </Link>
+      <hr />
+      <SearchComponent />
     </div>
   );
 };
