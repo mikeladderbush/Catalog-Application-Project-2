@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import SearchComponent from './SearchComponent';
+import DisplayImageComponent from './DisplayImageComponent';
 
 const MiniatureDetail = () => {
   const { token } = useParams();
@@ -89,7 +90,7 @@ const MiniatureDetail = () => {
 
   return (
     <div>
-      <h2>Miniature Detail</h2>
+      <h2>Add Miniatures</h2>
       <p>
         Name:
         <input
@@ -122,6 +123,7 @@ const MiniatureDetail = () => {
         <button>Go Back to Menu</button>
       </Link>
       <hr />
+      <h2>Search for Miniatures</h2>
       <SearchComponent />
     </div>
   );
