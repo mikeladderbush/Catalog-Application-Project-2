@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import MiniatureDetail from './Components/MiniatureDetail';
+import styles from './mystyle.module.css';
+
 
 function App() {
   return (
@@ -15,15 +17,14 @@ function App() {
     </Router>
   );
 }
-
 function MainRoute() {
   return (
-    <div>
-      <h1>Welcome to the Miniature Catalog</h1>
-      <p>
-        <Link to="/login">If you already have an account click here</Link> or <Link to="/register">Register</Link>
-      </p>
-    </div>
+      <div className={styles.Appbody}>
+        <h1>Welcome to the Miniature Catalog</h1>
+        <p>
+          <Link to="/login">If you already have an account click here</Link> or <Link to="/register">Register</Link>
+        </p>
+      </div>
   );
 }
 
@@ -59,7 +60,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className={styles.Appbody}>
       <form onSubmit={handleLogin}>
         <h1>Miniature Catalog Log in</h1>
         <h3>Welcome to my miniature catalog, please enter your
@@ -115,7 +116,7 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className={styles.Appbody}>
       <form onSubmit={handleRegister}>
         <h1>Register</h1>
         <div>
