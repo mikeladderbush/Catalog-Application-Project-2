@@ -70,7 +70,8 @@ public class CatalogapplicationApplication {
 
 /*
  * Next steps:
- * Build apis for creating miniatures with images that can be posted to
- * create a login form in react for spring security
- * add connection to react front end to apis and components
+ * have miniatures create a new link where they can be viewed with data and images
+ * finish HTML upgrades
+ * fix default miniature creations
+ * security analysis
  */
