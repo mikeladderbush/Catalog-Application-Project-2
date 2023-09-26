@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import MiniatureDetail from './Components/MiniatureDetail';
+import MiniatureList from './Components/MiniatureList';
+import MiniatureDetails from './Components/MiniatureDetails';
 import styles from './mystyle.module.css';
 
 
@@ -12,19 +13,20 @@ function App() {
         <Route path="/" element={<MainRoute />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureDetail />} />
+        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureList />} />
+        <Route path="/:token/:miniatureId" element={<MiniatureDetails />} />
       </Routes>
     </Router>
   );
 }
 function MainRoute() {
   return (
-      <div className={styles.Appbody}>
-        <h1>Welcome to the Miniature Catalog</h1>
-        <p>
-          <Link to="/login">If you already have an account click here</Link> or <Link to="/register">Register</Link>
-        </p>
-      </div>
+    <div className={styles.Appbody}>
+      <h1>Welcome to the Miniature Catalog</h1>
+      <p>
+        <Link to="/login">If you already have an account click here</Link> or <Link to="/register">Register</Link>
+      </p>
+    </div>
   );
 }
 
@@ -44,6 +46,11 @@ function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
+    if (!email || !password) {
+      alert('Please fill in all fields.');
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/authenticate', {
@@ -100,6 +107,11 @@ function Register() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
+
+    if (!username || !email || !password) {
+      alert('Please fill in all fields before registering.');
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/register', {

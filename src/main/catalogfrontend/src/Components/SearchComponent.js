@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -72,8 +72,8 @@ function SearchComponent() {
       <div>
         <h2>Search Results:</h2>
         <ul>
-          {searchResults.map((result, index) => (
-            <li key={index}>
+          {searchResults.map((result) => (
+            <li key={result.miniatureId}>
               {console.log(result)}
               {result.miniatureName && (
                 <p>Name: {result.miniatureName}</p>
@@ -84,6 +84,9 @@ function SearchComponent() {
               {result.miniatureBrand && (
                 <p>Brand: {result.miniatureBrand}</p>
               )}
+              <Link to={`/${token}/${result.miniatureId}`}>
+                View Details
+              </Link>
             </li>
           ))}
 

@@ -3,9 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import SearchComponent from './SearchComponent';
-import DisplayImageComponent from './DisplayImageComponent';
 
-const MiniatureDetail = () => {
+const MiniatureList = () => {
   const { token } = useParams();
 
   const config = {
@@ -48,6 +47,10 @@ const MiniatureDetail = () => {
   };
 
   const handleUpdate = () => {
+    if (!updatedData.miniatureName || !updatedData.miniatureScale || !updatedData.miniatureBrand) {
+      alert('Please fill in all fields before updating.');
+      return;
+    }
     const dataToUpdate = {
       ...miniature,
       ...updatedData,
@@ -65,6 +68,7 @@ const MiniatureDetail = () => {
         .then((response) => {
           console.log('Miniature updated:', response.data);
           setMiniature(response.data);
+          window.location.reload();
         })
         .catch((error) => {
           console.error('Error updating miniature:', error);
@@ -81,6 +85,7 @@ const MiniatureDetail = () => {
         .then((response) => {
           console.log('New miniature created:', response.data);
           setMiniature(response.data);
+          window.location.reload();
         })
         .catch((error) => {
           console.error('Error creating miniature:', error);
@@ -129,4 +134,4 @@ const MiniatureDetail = () => {
   );
 };
 
-export default MiniatureDetail;
+export default MiniatureList;

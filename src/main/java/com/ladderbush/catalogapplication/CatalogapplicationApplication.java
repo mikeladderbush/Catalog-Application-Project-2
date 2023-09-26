@@ -70,8 +70,5 @@ public class CatalogapplicationApplication {
 
 /*
  * Next steps:
- * have miniatures create a new link where they can be viewed with data and images
- * finish HTML upgrades
- * fix default miniature creations
- * security analysis
+ * links to miniature page that then holds data and images.
  */
