@@ -8,11 +8,19 @@ function MiniatureDetails() {
     const { miniatureId } = useParams();
     const [miniature, setMiniature] = useState({});
 
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
     useEffect (() => {
         const fetchMiniatureDetails = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:8080/api/v1/miniature-controller/${token}/${miniatureId}`
+                    `http://localhost:8080/api/v1/miniature-controller/${token}/${miniatureId}`, {
+                        headers: config.headers,
+                    }
                 );
                 setMiniature(response.data);
             } catch (error) {

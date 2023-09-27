@@ -19,6 +19,7 @@ const MiniatureList = () => {
     miniatureName: '',
     miniatureScale: '',
     miniatureBrand: '',
+    userId: '',
   });
 
   const loadData = async () => {

@@ -25,7 +25,7 @@ public class MiniatureController {
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 
-    @GetMapping("/{token}/{miniatureId}")
+    @GetMapping("/{username}/{token}/{miniatureId}")
     public ResponseEntity<Miniature> getMiniature(@PathVariable Long miniatureId) {
         Optional<Miniature> miniatureOptional = miniatureRepository.findByMiniatureId(miniatureId);
         if (miniatureOptional.isPresent()) {
@@ -35,13 +35,13 @@ public class MiniatureController {
         }
     }
 
-    @GetMapping("/{token}")
+    @GetMapping("/{username}/{token}")
     public ResponseEntity<List<Miniature>> getAllMiniatures() {
         List<Miniature> miniatures = miniatureRepository.findAll();
         return ResponseEntity.ok(miniatures);
     }
 
-    @PutMapping("/{token}/{miniatureId}/save")
+    @PutMapping("/{username}/{token}/{miniatureId}/save")
     public ResponseEntity<Miniature> updateMiniature(
             @PathVariable String token,
             @PathVariable Long miniatureId,
@@ -73,7 +73,7 @@ public class MiniatureController {
         }
     }
 
-    @PostMapping("/{token}/save")
+    @PostMapping("/{username}/{token}/save")
     public ResponseEntity<Miniature> saveMiniature(
             @PathVariable String token,
             @RequestBody Miniature miniature) {

@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<MainRoute />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/api/v1/miniature-controller/:token" element={<MiniatureList />} />
+        <Route path="/api/v1/miniature-controller/:username/:token" element={<MiniatureList />} />
         <Route path="/:token/:miniatureId" element={<MiniatureDetails />} />
       </Routes>
     </Router>
@@ -31,13 +31,13 @@ function MainRoute() {
 }
 
 function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -47,7 +47,7 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (!email || !password) {
+    if (!username || !password) {
       alert('Please fill in all fields.');
       return;
     }
@@ -60,7 +60,7 @@ function Login() {
 
       const newToken = response.data.access_token;
       setToken(newToken);
-      navigate(`/api/v1/miniature-controller/${newToken}`);
+      navigate(`/api/v1/miniature-controller/${username}/${newToken}`);
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -75,7 +75,7 @@ function Login() {
         </h3>
         <div>
           <label>Email:</label>
-          <input type="text" value={email} onChange={handleEmailChange} />
+          <input type="text" value={username} onChange={handleUsernameChange} />
         </div>
         <div>
           <label>Password:</label>
